@@ -43,7 +43,7 @@ SalesMgr::SalesMgr( const SalesMgr& copySource) {
   //std::cout << "SalesMgr copy constructor\n";
   salesMsgQueuePtr = copySource.salesMsgQueuePtr;
 
-  for (int i{0}; i < 5; i++) {
+  for (int i{0}; i < PRODUCT_CT; i++) {
     menProdCtr[i] = copySource.menProdCtr[i];
     womenProdCtr[i] = copySource.womenProdCtr[i];
   }
@@ -60,7 +60,7 @@ SalesMgr::SalesMgr( const SalesMgr& copySource) {
 SalesMgr::~SalesMgr() {
   //std::cout << "~SalesMgr\n";
   //delete salesMsgQueuePtr;
-  //for (int i{0}; i < 5; i++) {
+  //for (int i{0}; i < PRODUCT_CT; i++) {
   //  delete menProdCtr[i];
   //  delete womenProdCtr[i];
   //}
@@ -225,32 +225,36 @@ void SalesMgr::UpdateSalesCounters(Message input)
 //
 //*******************************************************************
 using std::setw;
-void SalesMgr::OutputSalesCounters() {
-
-  std::string prodName[5] {"Jacket Counters:", "Pants Counters: ", "Shorts Counters:",
-      "Shirt Counters: ", "Socks Counters: " };
-  ApparelCtr* tgtCtPtr;
+void SalesMgr::OutputSalesCounters()
+{
+  std::string prodName[PRODUCT_CT] {"Jacket Counters:", "Pants Counters: ",
+      "Shorts Counters:", "Shirt Counters: ", "Socks Counters: " };
+  ApparelCtr* ctPtr;  // target count pointer
+  
   int totalProducts{0}; 
 
   std::cout << std::endl << std::endl;
-    for (int prod{0}; prod < 5; prod++) {
+    for (int prod{0}; prod < PRODUCT_CT; prod++)
+      {
+	ctPtr = menProdCtr[prod];
+	std::cout << prodName[prod] << setw(8) << "Large" << setw(12)
+		  << "Medium" << setw(12) << "Small" << setw(13) << "Total\n";
+	std::cout << setw(10) << "  Mens:" << setw(14) << ctPtr->itemSizeL
+		  << setw(12) << ctPtr->itemSizeM << setw(12)
+		  << ctPtr->itemSizeS << setw(12)
+		  << ctPtr->itemSizeL + ctPtr->itemSizeM + ctPtr->itemSizeS
+		  << std::endl;
+	totalProducts += ctPtr->itemSizeL + ctPtr->itemSizeM + ctPtr->itemSizeS;
+	ctPtr = womenProdCtr[prod];
+	std::cout << setw(10) << "Womans:" << setw(14) << ctPtr->itemSizeL
+		  << setw(12) << ctPtr->itemSizeM << setw(12)
+		  << ctPtr->itemSizeS << setw(12)
+		  << ctPtr->itemSizeL + ctPtr->itemSizeM + ctPtr->itemSizeS
+		  << std::endl;
+	totalProducts += ctPtr->itemSizeL + ctPtr->itemSizeM + ctPtr->itemSizeS;
+      }
 
-    tgtCtPtr = menProdCtr[prod];
-    std::cout << prodName[prod] << setw(8) << "Large" << setw(12) << "Medium"
-	      << setw(12) << "Small" << setw(13) << "Total\n";
-    std::cout << setw(10) << "  Mens:" << setw(14) << tgtCtPtr->itemSizeL << setw(12)
-	      << tgtCtPtr->itemSizeM << setw(12) << tgtCtPtr->itemSizeS << setw(12)
-	      << tgtCtPtr->itemSizeL + tgtCtPtr->itemSizeM + tgtCtPtr->itemSizeS
+    std::cout << "Total Sales: $" << std::fixed << std::setprecision(2)
+	      << setw(12) << totalSales << setw(34) << totalProducts
 	      << std::endl;
-    totalProducts += tgtCtPtr->itemSizeL + tgtCtPtr->itemSizeM + tgtCtPtr->itemSizeS;
-    tgtCtPtr = womenProdCtr[prod];
-    std::cout << setw(10) << "Womans:" << setw(14) << tgtCtPtr->itemSizeL << setw(12)
-	      << tgtCtPtr->itemSizeM << setw(12) << tgtCtPtr->itemSizeS << setw(12)
-	      << tgtCtPtr->itemSizeL + tgtCtPtr->itemSizeM + tgtCtPtr->itemSizeS
-	      << std::endl;
-    totalProducts += tgtCtPtr->itemSizeL + tgtCtPtr->itemSizeM + tgtCtPtr->itemSizeS;
-  }
-
-    std::cout << "Total Sales: $" << std::fixed << std::setprecision(2) << setw(12)
-	      << totalSales << setw(34) << totalProducts << std::endl;
 }

@@ -51,8 +51,8 @@ public:
   };
 
   double totalSales{0.0};
-  ApparelCtr* menProdCtr[5]{nullptr, nullptr, nullptr, nullptr, nullptr};
-  ApparelCtr* womenProdCtr[5]{nullptr, nullptr, nullptr, nullptr, nullptr};
+  ApparelCtr* menProdCtr[PRODUCT_CT]{nullptr,nullptr,nullptr,nullptr,nullptr};
+  ApparelCtr* womenProdCtr[PRODUCT_CT]{nullptr,nullptr,nullptr,nullptr,nullptr};
 
   Queue<Message>* salesMsgQueuePtr{nullptr};;  // apparel, M or F, size, color
 	
