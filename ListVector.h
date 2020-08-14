@@ -29,11 +29,11 @@ extern std::mutex m_Mutex[PRODUCT_CT];
 template<class  T>
 class ListVector
 {
-public:                                        // return instance ptr to the vector
-  static ListVector<T>* get_instance(int nl);  // of nl (number of listss) lists.
-  static ListVector<T>* get_instance();        // return instance pointer
-  void add_element(T& elem, int nlist);        // add element to end of input list
-  bool remove_if(T& elem, int nlist);          // remove element if match input elem
+public:                                     // return instance ptr to the vector
+  static ListVector<T>* get_instance(int nl); // of nl (number of listss) lists.
+  static ListVector<T>* get_instance();     // return instance pointer
+  void add_element(T& elem, int nlist);     // add element to end of input list
+  bool remove_if(T& elem, int nlist);       // remove element if match input elem
 
 private:
   std::vector<std::shared_ptr<std::list<T>>> Lists;
@@ -78,7 +78,7 @@ ListVector<T>::ListVector() {}
 //****************************************************************************
 template<typename T>
 ListVector<T>::~ListVector() {
-  std::cout << "~ListVector\n";
+  //std::cout << "~ListVector\n";
   delete instancePtr;
 }
 
@@ -148,7 +148,7 @@ void ListVector<T>::add_element(T& elem, int nlist)
   std::lock_guard<std::mutex> lock(m_Mutex[nlist]);
 
   // get the shared pointer to the appropriate list
-  std::shared_ptr<std::list<T>> ml = instancePtr->Lists.at(nlist);
+  auto ml = instancePtr->Lists.at(nlist);
 
   // add the element to the end of the list
   ml->push_back(elem);
@@ -173,12 +173,12 @@ bool ListVector<T>::remove_if(T& elem, int nlist)
   std::lock_guard<std::mutex> lock(m_Mutex[nlist]);
   
   // instantiate the appropriate list shared_ptr
-  std::shared_ptr<std::list<T>> shrd_lst = instancePtr->Lists.at(nlist);
+  auto shrd_lst = instancePtr->Lists.at(nlist);
   
-  std::list<T>* lst = shrd_lst.get();
+  auto lst = shrd_lst.get();
   
   // find the element if it's on the list
-  typename std::list<T>::iterator elfound = find(lst->begin(), lst->end(), elem);
+  auto elfound = find(lst->begin(), lst->end(), elem);
   
   if (elfound == lst->end()) {
     return false;
