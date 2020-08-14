@@ -162,13 +162,16 @@ Elem Queue<Elem>::dequeue(void) {
 template <typename Elem>
 Elem Queue<Elem>::peek(void) const {
 
+  Message qMsg;
+  
   std::lock_guard<std::mutex> lock(m_Qutex);
-  if (qsize == 0) {
-    Message nullMsg;
-    nullMsg.destination = (unsigned)Dest::NULLMSG;
-    return nullMsg;
-  } else
-    return (front->data);
+  
+  if (qsize == 0)
+    qMsg.destination = (unsigned)Dest::NULLMSG;
+  else
+    qMsg = front->data;
+  
+  return qMsg;
 }
 
 //***************************************************************************
