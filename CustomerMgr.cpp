@@ -141,7 +141,7 @@ void CustomerMgr::CustomerManager()
 //  returns: void
 //
 //********************************************************************
-void CustomerMgr::CustomerTask(int delayTime)
+void CustomerMgr::CustomerTask(const int delayTime)
 {
   // delay to simulate a real person
   std::this_thread::sleep_for(chrono::milliseconds(delayTime));

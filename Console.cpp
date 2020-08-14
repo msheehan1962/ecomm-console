@@ -21,36 +21,33 @@
 
 
 // default constructor console/terminal IO
-Console::Console() : inStream{ std::cin }, outStream{ std::cout } {
-
-}
+Console::Console() : inStream{ std::cin }, outStream{ std::cout } { }
 
 // constructor for file input
-
 Console::Console(const std::string& infile) :
 	_inFile{ infile, std::ios_base::in },    // open input file
-	inStream{ _inFile }, outStream{ std::cout } {
-
-	_isInFile = true;
+	inStream{ _inFile }, outStream{ std::cout }
+{
+  _isInFile = true;
 }
 
 // constructor for file input and file output
 Console::Console(const std::string& infile, const std::string& outfile) :
-	_inFile{ infile, std::ios_base::in },    // open input file
-	_outFile{ outfile, std::ios_base::out }, // open output file
-	inStream{_inFile}, outStream{_outFile} {
-
-	_isInFile = true; 
-	_isOutFile = true;
+  _inFile{ infile, std::ios_base::in },    // open input file
+  _outFile{ outfile, std::ios_base::out }, // open output file
+  inStream{_inFile}, outStream{_outFile}
+{
+  _isInFile = true; 
+  _isOutFile = true;
 }
 
 // destructor: close any open files
-Console::~Console() {
-
-	if (_isInFile)
-		_inFile.close();
-	if (_isOutFile)
-		_outFile.close();
+Console::~Console()
+{
+  if (_isInFile)
+    _inFile.close();
+  if (_isOutFile)
+    _outFile.close();
 }
 
 //*******************************************************************
@@ -65,10 +62,9 @@ Console::~Console() {
 //  Returns: std:string object containing the input line
 //
 //*******************************************************************
-
-std::string Console::getLine() {
-
-  std::string temp;
+std::string Console::getLine()
+{
+  std::string temp;    
 	
   // if reading from a file, set end-of-file as "done" input.
   if (_isInFile) {
@@ -93,11 +89,9 @@ std::string Console::getLine() {
 //  Returns: void
 //
 //*******************************************************************
-
-// putLine: print the parameter output string (ostr)
-void Console::putLine(const std::string& ostr) const {
-	
-	outStream << ostr;
+void Console::putLine(const std::string& ostr) const
+{
+  outStream << ostr;
 }
 
 //*******************************************************************
@@ -112,7 +106,7 @@ void Console::putLine(const std::string& ostr) const {
 //*******************************************************************
 
 // printPrompt: print the default prompt
-void Console::printPrompt() const {
-
+void Console::printPrompt() const
+{
 	outStream << _prompt;
 }

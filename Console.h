@@ -1,10 +1,10 @@
-//
+//******************************************************************
 //  Name:  Console.h
 //
 //  Description:  This class accepts user input and output 
 //                and seamlessly handles interactive or file
 //                input and output.
-//
+//*****************************************************************
 #ifndef _CONSOLE_H
 #define _CONSOLE_H
 #include <iostream>

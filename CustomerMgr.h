@@ -18,13 +18,9 @@ public:
 	      Queue<Message>* salesMsgQ,
 	      Queue<Message>* inventoryMsgQ);
   ~CustomerMgr();
-  // copy constructor
-  //CustomerMgr(const CustomerMgr& copySource);  
-  //CustomerMgr(CustomerMgr&& moveSource);       // move constructor
-  //void operator= (CustomerMgr&& moveSource);   // move assignment operator
   void operator () ();
   void CustomerManager();
-  void CustomerTask(int delayTime);
+  void CustomerTask(const int delayTime);
   ListVector<ProductT>* GetInventoryListPtr();
 private:
   Queue<Message>* SalesMsgQuePtr;
