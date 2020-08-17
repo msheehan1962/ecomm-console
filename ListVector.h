@@ -103,7 +103,7 @@ ListVector<T>* ListVector<T>::get_instance(int nl)
     // of the "nl" number of lists onto the vector.
     for (int j = 0; j < nl; j++)
       {
-	std::list<T>* mlistP = new std::list<T>;
+	auto mlistP = new std::list<T>;
 	std::shared_ptr<std::list<T>> sp1(mlistP);
 	instancePtr->Lists.push_back(sp1);
       }
